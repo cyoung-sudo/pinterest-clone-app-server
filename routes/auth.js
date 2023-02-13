@@ -2,8 +2,6 @@ const express = require("express");
 const authRoutes = express.Router();
 // Authentication
 const passport = require("passport");
-// Models
-const User = require("../models/userModel");
 
 //----- Redirect to github authentication page
 authRoutes.get("/auth/github",
@@ -13,26 +11,8 @@ authRoutes.get("/auth/github",
 authRoutes.get("/auth/github/callback", 
   passport.authenticate("github", { failureRedirect: "http://localhost:3000/login" }),
   function(req, res) {
-    // Check if github account already in use
-    User.findOne({
-      githubId: req.user.id
-    })
-    .then(doc => {
-      if(doc) {
-        return doc;
-      } else {
-        // Create new user
-        return User.create({
-          username: `user${Date.now()}`,
-          githubId: req.user.id
-        });
-      }
-    })
-    .then(result => {
-      // Redirect to client profile page
-      res.redirect(`http://localhost:3000/users/${result._id}`);
-    })
-    .catch(err => console.log(err));
+    // Redirect to client profile page
+    res.redirect(`http://localhost:3000/users/${req.user._id}`);
   });
 
 //----- Logout user
