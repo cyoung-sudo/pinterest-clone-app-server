@@ -6,6 +6,17 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/userModel");
 
 userRoutes.route("/users")
+//----- Retrieve all users
+.get((req, res) => {
+  User.find({})
+  .then(allDocs => {
+    res.json({
+      success: true,
+      users: allDocs
+    })
+  })
+  .catch(err => console.log(err));
+})
 //----- Create new user
 .post((req, res) => {
   // Encrypt password
