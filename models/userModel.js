@@ -8,7 +8,8 @@ const UserSchema = new mongoose.Schema({
   },
   githubId: {
     type: String,
-    unique: true
+    unique: true,
+    sparse: true
   },
   password: {
     type: String
