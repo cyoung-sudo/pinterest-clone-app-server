@@ -24,7 +24,6 @@ userRoutes.route("/users")
       })
       .catch(err => {
         console.log(err);
-
         res.json({
           success: false,
           message: "Username has been taken"
