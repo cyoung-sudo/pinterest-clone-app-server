@@ -25,4 +25,19 @@ imageRoutes.route("/images")
   });
 });
 
+imageRoutes.route("/images/user/:userId")
+//----- Retrieve all images for given user
+.get((req, res) => {
+  Image.find({
+    ownerId: req.params.userId,
+  })
+  .then(docs => {
+    res.json({
+      success: true,
+      images: docs
+    });
+  })
+  .catch(err => console.log(err));
+});
+
 module.exports = imageRoutes;
