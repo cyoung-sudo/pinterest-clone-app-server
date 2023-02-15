@@ -38,6 +38,19 @@ imageRoutes.route("/images/user/:userId")
     });
   })
   .catch(err => console.log(err));
+})
+//----- Delete all images for given user
+.delete((req, res) => {
+  Image.deleteMany({
+    ownerId: req.params.userId
+  })
+  .then(deletedCount => {
+    res.json({
+      success: true,
+      count: deletedCount.deletedCount
+    })
+  })
+  .catch(err => console.log(err));
 });
 
 module.exports = imageRoutes;
