@@ -25,6 +25,19 @@ imageRoutes.route("/images")
   });
 });
 
+imageRoutes.route("/image/:id")
+//----- Delete given image
+.delete((req, res) => {
+  Image.findByIdAndDelete(req.params.id)
+  .then(deletedDoc => {
+    res.json({
+      success: true,
+      image: deletedDoc
+    });
+  })
+  .catch(err => console.log(err));
+})
+
 imageRoutes.route("/images/user/:userId")
 //----- Retrieve all images for given user
 .get((req, res) => {
